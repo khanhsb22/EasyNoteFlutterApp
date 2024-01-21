@@ -1,4 +1,7 @@
 
+import 'dart:convert';
+
+import 'package:desktop_multi_window/desktop_multi_window.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:untitled/home_controller.dart';
@@ -14,7 +17,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State<HomePage> {
-  var homeController = Get.put(HomeController());
+  final HomeController homeController = Get.find();
 
   Color favouriteColor = HexColor('F013AD');
   List<Note> notes = Generate().getNoteList();
@@ -141,7 +144,20 @@ class _HomePage extends State<HomePage> {
                   Container(
                     padding: EdgeInsets.only(left: 10),
                     child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          final window =
+                            await DesktopMultiWindow.createWindow(jsonEncode({
+                              'args1': 'Add new note',
+                              'args2': 100,
+                              'args3': false,
+                              'business': 'business_test',
+                            }));
+                          window
+                            ..setFrame(const Offset(0, 0) & const Size(950, 700))
+                            ..center()
+                            ..setTitle('Add new note')
+                            // ..resizable(false)
+                            ..show();
                         },
                         child: Row(
                           children: [
@@ -288,7 +304,20 @@ class _HomePage extends State<HomePage> {
                       Container(
                         padding: EdgeInsets.only(left: 10, right: 20),
                         child: ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async {
+                              final window =
+                              await DesktopMultiWindow.createWindow(jsonEncode({
+                                'args1': 'Add new note',
+                                'args2': 100,
+                                'args3': false,
+                                'business': 'business_test',
+                              }));
+                              window
+                                ..setFrame(const Offset(0, 0) & const Size(950, 700))
+                                ..center()
+                                ..setTitle('Add new note')
+                              // ..resizable(false)
+                                ..show();
                             },
                             child: Row(
                               children: [
@@ -326,11 +355,96 @@ class _HomePage extends State<HomePage> {
     Color blue = HexColor('C0FAD7');
     Color brown = HexColor('9FA165');
     if (index % 2 == 0) {
+      String jsonNote = jsonEncode(item);
       return Padding(
         padding: const EdgeInsets.only(bottom: 10.0, left: 10),
+        child: GestureDetector(
+          onTap: () async {
+            final window =
+                await DesktopMultiWindow.createWindow(jsonEncode({
+                  'args1': 'Detail note',
+                  'args2': 100,
+                  'args3': false,
+                  'business': 'business_test',
+                  'jsonNote': jsonNote,
+                })); // args[2] = 'Detail note'
+            window
+              ..setFrame(const Offset(0, 0) & const Size(950, 700))
+              ..center()
+              ..setTitle('Detail note')
+              ..show();
+          },
+          child: Container(
+            decoration: BoxDecoration(
+                color: brown,
+                borderRadius: const BorderRadius.all(Radius.circular(5))
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('${item.date}', style: TextStyle(fontSize: 13, color: Colors.black, fontWeight: FontWeight.w500),),
+                      Text('${item.title}', style: TextStyle(fontSize: 13, color: Colors.black, fontWeight: FontWeight.w500),),
+                    ],
+                  ),
+                  SizedBox(height: 15,),
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 10,
+                        child: Text('${item.content}',
+                            style: TextStyle(fontSize: 13, color: Colors.white)),
+                      ),
+                      Expanded(
+                          flex: 0,
+                          child: Row(
+                            children: [
+                              IconButton(
+                                onPressed: () async {
+                                  setState(() {
+                                    item.isFav = !item.isFav;
+                                  });
+                                },
+                                icon: item.isFav
+                                    ? Image.asset('images/favourite.png')
+                                    : Image.asset('images/favourite_empty.png'),
+                                iconSize: 40,
+                              ),
+                            ],
+                          )),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10.0, left: 10),
+      child: GestureDetector(
+        onTap: () async{
+          final window =
+          await DesktopMultiWindow.createWindow(jsonEncode({
+            'args1': 'Detail note',
+            'args2': 100,
+            'args3': true,
+            'business': 'business_test',
+          }));
+          window
+            ..setFrame(const Offset(0, 0) & const Size(950, 700))
+            ..center()
+            ..setTitle('Detail note')
+          // ..resizable(false)
+            ..show();
+        },
         child: Container(
           decoration: BoxDecoration(
-              color: brown,
+              color: blue2,
               borderRadius: const BorderRadius.all(Radius.circular(5))
           ),
           child: Padding(
@@ -340,8 +454,8 @@ class _HomePage extends State<HomePage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('${item.date}', style: TextStyle(fontSize: 13, color: Colors.black, fontWeight: FontWeight.w500),),
-                    Text('${item.title}', style: TextStyle(fontSize: 13, color: Colors.black, fontWeight: FontWeight.w500),),
+                    Text('${item.date}', style: TextStyle(fontSize: 13, color: blue, fontWeight: FontWeight.w500),),
+                    Text('${item.title}', style: TextStyle(fontSize: 13, color: blue, fontWeight: FontWeight.w500),),
                   ],
                 ),
                 SizedBox(height: 15,),
@@ -375,56 +489,6 @@ class _HomePage extends State<HomePage> {
             ),
           ),
         ),
-      );
-    }
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10.0, left: 10),
-      child: Container(
-        decoration: BoxDecoration(
-            color: blue2,
-            borderRadius: const BorderRadius.all(Radius.circular(5))
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('${item.date}', style: TextStyle(fontSize: 13, color: blue, fontWeight: FontWeight.w500),),
-                  Text('${item.title}', style: TextStyle(fontSize: 13, color: blue, fontWeight: FontWeight.w500),),
-                ],
-              ),
-              SizedBox(height: 15,),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 10,
-                    child: Text('${item.content}',
-                        style: TextStyle(fontSize: 13, color: Colors.white)),
-                  ),
-                  Expanded(
-                      flex: 0,
-                      child: Row(
-                        children: [
-                          IconButton(
-                            onPressed: () async {
-                              setState(() {
-                                item.isFav = !item.isFav;
-                              });
-                            },
-                            icon: item.isFav
-                                ? Image.asset('images/favourite.png')
-                                : Image.asset('images/favourite_empty.png'),
-                            iconSize: 40,
-                          ),
-                        ],
-                      )),
-                ],
-              )
-            ],
-          ),
-        ),
       ),
     );
 
@@ -435,50 +499,66 @@ class _HomePage extends State<HomePage> {
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0, right: 10),
-      child: Container(
-        decoration: BoxDecoration(
-            color: yellow,
-            borderRadius: const BorderRadius.all(Radius.circular(5))
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('${item.date}', style: TextStyle(fontSize: 13, color: Colors.black, fontWeight: FontWeight.w500),),
-                  Text('${item.title}', style: TextStyle(fontSize: 13, color: Colors.black, fontWeight: FontWeight.w500),),
-                ],
-              ),
-              SizedBox(height: 15,),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 10,
-                    child: Text('${item.content}',
-                        style: TextStyle(fontSize: 13, color: Colors.black)),
-                  ),
-                  Expanded(
-                      flex: 0,
-                      child: Row(
-                        children: [
-                          IconButton(
-                            onPressed: () async {
-                              setState(() {
-                                item.isFav = !item.isFav;
-                              });
-                            },
-                            icon: item.isFav
-                                ? Image.asset('images/favourite.png')
-                                : Image.asset('images/favourite_empty.png'),
-                            iconSize: 40,
-                          ),
-                        ],
-                      )),
-                ],
-              )
-            ],
+      child: GestureDetector(
+        onTap: () async {
+          final window =
+          await DesktopMultiWindow.createWindow(jsonEncode({
+            'args1': 'Detail note',
+            'args2': 100,
+            'args3': false,
+            'business': 'business_test',
+          })); // args[2] = 'Detail note'
+          window
+            ..setFrame(const Offset(0, 0) & const Size(950, 700))
+            ..center()
+            ..setTitle('Detail note')
+            ..show();
+        },
+        child: Container(
+          decoration: BoxDecoration(
+              color: yellow,
+              borderRadius: const BorderRadius.all(Radius.circular(5))
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('${item.date}', style: TextStyle(fontSize: 13, color: Colors.black, fontWeight: FontWeight.w500),),
+                    Text('${item.title}', style: TextStyle(fontSize: 13, color: Colors.black, fontWeight: FontWeight.w500),),
+                  ],
+                ),
+                SizedBox(height: 15,),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 10,
+                      child: Text('${item.content}',
+                          style: TextStyle(fontSize: 13, color: Colors.black)),
+                    ),
+                    Expanded(
+                        flex: 0,
+                        child: Row(
+                          children: [
+                            IconButton(
+                              onPressed: () async {
+                                setState(() {
+                                  item.isFav = !item.isFav;
+                                });
+                              },
+                              icon: item.isFav
+                                  ? Image.asset('images/favourite.png')
+                                  : Image.asset('images/favourite_empty.png'),
+                              iconSize: 40,
+                            ),
+                          ],
+                        )),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),

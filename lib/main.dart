@@ -1,23 +1,53 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:untitled/add_new.dart';
+import 'package:untitled/detail.dart';
 import 'package:untitled/hex_color.dart';
 import 'package:untitled/home.dart';
 import 'package:window_size/window_size.dart';
 
-void main() {
+import 'home_controller.dart';
+
+void main(List<String> args) {
   WidgetsFlutterBinding.ensureInitialized();
+
+  Get.lazyPut(() => HomeController());
+
   if (Platform.isWindows || Platform.isMacOS) {
-    setWindowTitle("My App");
-    setWindowMinSize(
-        const Size(550, 425)); // width, height: Size when minimize app
+    setWindowTitle("Easy Note App");
+    setWindowMinSize(const Size(750, 800));
     setWindowMaxSize(Size.infinite);
+
+    if (args.firstOrNull == 'multi_window') {
+      final argument = args[2].isEmpty
+          ? const {}
+          : jsonDecode(args[2]) as Map<String, dynamic>;
+
+      if (argument['args1'] == 'Add new note') {
+        runApp(const MaterialApp(debugShowCheckedModeBanner: false,
+            title: 'Add new note',
+            home: AddNew())
+        );
+      }
+      if (argument['args1'] == 'Detail note') {
+        String jsonNote = argument['jsonNote'];
+        runApp(MaterialApp(debugShowCheckedModeBanner: false,
+            title: 'Detail note',
+            home: Detail(jsonNote))
+        );
+      }
+    } else {
+      runApp(const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: "MyApp",
+        home: MyStateFulWidget(),
+      ));
+    }
   }
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    title: "MyApp",
-    home: MyStateFulWidget(),
-  ));
+
 }
 
 class MyStateFulWidget extends StatefulWidget {
