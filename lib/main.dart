@@ -10,6 +10,7 @@ import 'package:untitled/home.dart';
 import 'package:window_size/window_size.dart';
 
 import 'home_controller.dart';
+import 'notify.dart';
 
 void main(List<String> args) {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +19,7 @@ void main(List<String> args) {
 
   if (Platform.isWindows || Platform.isMacOS) {
     setWindowTitle("Easy Note App");
-    setWindowMinSize(const Size(750, 800));
+    setWindowMinSize(const Size(550, 425));
     setWindowMaxSize(Size.infinite);
 
     if (args.firstOrNull == 'multi_window') {
@@ -35,7 +36,6 @@ void main(List<String> args) {
       if (argument['args1'] == 'Detail note') {
         String jsonNote = argument['jsonNote'];
         runApp(MaterialApp(debugShowCheckedModeBanner: false,
-            title: 'Detail note',
             home: Detail(jsonNote))
         );
       }
@@ -77,7 +77,9 @@ class _MyStateFulWidgetState extends State<MyStateFulWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Notify()));
+                  },
                   icon: Image.asset('images/notification.png'),
                   iconSize: 40,
                 ),

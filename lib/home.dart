@@ -5,6 +5,7 @@ import 'package:desktop_multi_window/desktop_multi_window.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:untitled/home_controller.dart';
+import 'package:untitled/notify.dart';
 import 'generate.dart';
 import 'hex_color.dart';
 import 'note.dart';
@@ -46,7 +47,9 @@ class _HomePage extends State<HomePage> {
                       ),
                       SizedBox(width: 10,),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => Notify()));
+                        },
                         icon: Image.asset('images/notification.png'),
                         iconSize: 40,
                       ),
@@ -138,48 +141,51 @@ class _HomePage extends State<HomePage> {
             // SizedBox(height: 50,),
             Expanded(
               flex: 1,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    padding: EdgeInsets.only(left: 10),
-                    child: ElevatedButton(
-                        onPressed: () async {
-                          final window =
-                            await DesktopMultiWindow.createWindow(jsonEncode({
-                              'args1': 'Add new note',
-                              'args2': 100,
-                              'args3': false,
-                              'business': 'business_test',
-                            }));
-                          window
-                            ..setFrame(const Offset(0, 0) & const Size(950, 700))
-                            ..center()
-                            ..setTitle('Add new note')
-                            // ..resizable(false)
-                            ..show();
-                        },
-                        child: Row(
-                          children: [
-                            Text("NEW NOTE",
-                                style: TextStyle(fontSize: 12, color: Colors.white, fontWeight: FontWeight.w400)),
-                            Image.asset('images/add.png', width: 40, height: 40,)
-                          ],
-                        ),
-                        style: ElevatedButton.styleFrom(
-                            primary: buttonColor,
-                            shape: RoundedRectangleBorder(
-                              //to set border radius to button
-                                borderRadius: BorderRadius.circular(5)),
-                            padding: EdgeInsets.only(left: 22, top: 15, right: 22, bottom:15 ) //content padding inside button
-                        )),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Image.asset('images/idea.png'),
-                    iconSize: 40,
-                  ),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.only(top: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(left: 10),
+                      child: ElevatedButton(
+                          onPressed: () async {
+                            final window =
+                              await DesktopMultiWindow.createWindow(jsonEncode({
+                                'args1': 'Add new note',
+                                'args2': 100,
+                                'args3': false,
+                                'business': 'business_test',
+                              }));
+                            window
+                              ..setFrame(const Offset(0, 0) & const Size(950, 700))
+                              ..center()
+                              ..setTitle('Add new note')
+                              // ..resizable(false)
+                              ..show();
+                          },
+                          child: Row(
+                            children: [
+                              Text("NEW NOTE",
+                                  style: TextStyle(fontSize: 12, color: Colors.white, fontWeight: FontWeight.w400)),
+                              Image.asset('images/add.png', width: 40, height: 40,)
+                            ],
+                          ),
+                          style: ElevatedButton.styleFrom(
+                              primary: buttonColor,
+                              shape: RoundedRectangleBorder(
+                                //to set border radius to button
+                                  borderRadius: BorderRadius.circular(5)),
+                              padding: EdgeInsets.only(left: 22, top: 15, right: 22, bottom:15 ) //content padding inside button
+                          )),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: Image.asset('images/idea.png'),
+                      iconSize: 40,
+                    ),
+                  ],
+                ),
               ),
             )
           ],
@@ -204,7 +210,9 @@ class _HomePage extends State<HomePage> {
                       ),
                       SizedBox(width: 10,),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => Notify()));
+                        },
                         icon: Image.asset('images/notification.png'),
                         iconSize: 40,
                       ),
@@ -291,57 +299,60 @@ class _HomePage extends State<HomePage> {
             ),
             Expanded(
               flex: 1,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: Image.asset('images/idea.png'),
-                    iconSize: 40,
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.only(left: 10, right: 20),
-                        child: ElevatedButton(
-                            onPressed: () async {
-                              final window =
-                              await DesktopMultiWindow.createWindow(jsonEncode({
-                                'args1': 'Add new note',
-                                'args2': 100,
-                                'args3': false,
-                                'business': 'business_test',
-                              }));
-                              window
-                                ..setFrame(const Offset(0, 0) & const Size(950, 700))
-                                ..center()
-                                ..setTitle('Add new note')
-                              // ..resizable(false)
-                                ..show();
-                            },
-                            child: Row(
-                              children: [
-                                Text("NEW NOTE",
-                                    style: TextStyle(fontSize: 12, color: Colors.white, fontWeight: FontWeight.w400)),
-                                Image.asset('images/add.png', width: 40, height: 40,)
-                              ],
-                            ),
-                            style: ElevatedButton.styleFrom(
-                                primary: buttonColor,
-                                shape: RoundedRectangleBorder(
-                                  //to set border radius to button
-                                    borderRadius: BorderRadius.circular(5)),
-                                padding: EdgeInsets.only(left: 22, top: 15, right: 22, bottom:15 ) //content padding inside button
-                            )),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Image.asset('images/trash.png'),
-                        iconSize: 40,
-                      ),
-                    ],
-                  ),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.only(top: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: Image.asset('images/idea.png'),
+                      iconSize: 40,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.only(left: 10, right: 20),
+                          child: ElevatedButton(
+                              onPressed: () async {
+                                final window =
+                                await DesktopMultiWindow.createWindow(jsonEncode({
+                                  'args1': 'Add new note',
+                                  'args2': 100,
+                                  'args3': false,
+                                  'business': 'business_test',
+                                }));
+                                window
+                                  ..setFrame(const Offset(0, 0) & const Size(950, 700))
+                                  ..center()
+                                  ..setTitle('Add new note')
+                                // ..resizable(false)
+                                  ..show();
+                              },
+                              child: Row(
+                                children: [
+                                  Text("NEW NOTE",
+                                      style: TextStyle(fontSize: 12, color: Colors.white, fontWeight: FontWeight.w400)),
+                                  Image.asset('images/add.png', width: 40, height: 40,)
+                                ],
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                  primary: buttonColor,
+                                  shape: RoundedRectangleBorder(
+                                    //to set border radius to button
+                                      borderRadius: BorderRadius.circular(5)),
+                                  padding: EdgeInsets.only(left: 22, top: 15, right: 22, bottom:15 ) //content padding inside button
+                              )),
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: Image.asset('images/trash.png'),
+                          iconSize: 40,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             )
           ],
@@ -354,8 +365,8 @@ class _HomePage extends State<HomePage> {
     Color blue2 = HexColor('536393');
     Color blue = HexColor('C0FAD7');
     Color brown = HexColor('9FA165');
+    String jsonNote = jsonEncode(item);
     if (index % 2 == 0) {
-      String jsonNote = jsonEncode(item);
       return Padding(
         padding: const EdgeInsets.only(bottom: 10.0, left: 10),
         child: GestureDetector(
@@ -432,14 +443,14 @@ class _HomePage extends State<HomePage> {
           await DesktopMultiWindow.createWindow(jsonEncode({
             'args1': 'Detail note',
             'args2': 100,
-            'args3': true,
+            'args3': false,
             'business': 'business_test',
+            'jsonNote': jsonNote,
           }));
           window
             ..setFrame(const Offset(0, 0) & const Size(950, 700))
             ..center()
             ..setTitle('Detail note')
-          // ..resizable(false)
             ..show();
         },
         child: Container(
@@ -496,7 +507,7 @@ class _HomePage extends State<HomePage> {
 
   Widget _noteItemFav(Note item, int index) {
     Color yellow = HexColor('FFE082');
-
+    String jsonNote = jsonEncode(item);
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0, right: 10),
       child: GestureDetector(
@@ -507,6 +518,7 @@ class _HomePage extends State<HomePage> {
             'args2': 100,
             'args3': false,
             'business': 'business_test',
+            'jsonNote': jsonNote,
           })); // args[2] = 'Detail note'
           window
             ..setFrame(const Offset(0, 0) & const Size(950, 700))

@@ -34,7 +34,6 @@ dependencies:
     git:
       url: https://github.com/google/flutter-desktop-embedding.git
       path: plugins/window_size
-  window_manager: ^0.2.7
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -76,6 +75,8 @@ flutter:
     - images/favourite.png
     - images/favourite_empty.png
     - images/note.png
+    - images/check.png
+    - images/delete.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
