@@ -76,7 +76,7 @@ class _MyStateFulWidgetState extends State<MyStateFulWidget> {
                 child: Text("NEW NOTE",
                     style: TextStyle(fontSize: 12, color: Colors.white, fontWeight: FontWeight.w400)),
                 style: ElevatedButton.styleFrom(
-                    primary: newNoteColor,
+                    backgroundColor: newNoteColor,
                     shape: RoundedRectangleBorder(
                         //to set border radius to button
                         borderRadius: BorderRadius.circular(5)),
