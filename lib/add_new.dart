@@ -61,7 +61,7 @@ class _AddNewState extends State<AddNew> {
                       ],
                     ),
                     style: ElevatedButton.styleFrom(
-                        primary: buttonColor,
+                        backgroundColor: buttonColor,
                         shape: RoundedRectangleBorder(
                           //to set border radius to button
                             borderRadius: BorderRadius.circular(5)),

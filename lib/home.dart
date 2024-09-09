@@ -172,7 +172,7 @@ class _HomePage extends State<HomePage> {
                             ],
                           ),
                           style: ElevatedButton.styleFrom(
-                              primary: buttonColor,
+                              backgroundColor: buttonColor,
                               shape: RoundedRectangleBorder(
                                 //to set border radius to button
                                   borderRadius: BorderRadius.circular(5)),
@@ -337,7 +337,7 @@ class _HomePage extends State<HomePage> {
                                 ],
                               ),
                               style: ElevatedButton.styleFrom(
-                                  primary: buttonColor,
+                                  backgroundColor: buttonColor,
                                   shape: RoundedRectangleBorder(
                                     //to set border radius to button
                                       borderRadius: BorderRadius.circular(5)),
